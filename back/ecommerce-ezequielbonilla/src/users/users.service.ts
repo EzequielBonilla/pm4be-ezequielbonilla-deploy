@@ -8,7 +8,7 @@ export class UsersService {
   constructor(private readonly userRepository: UsersRepository) {}
 
   create(createUserDto: CreateUserDto) {
-    return 'This action adds a new user';
+    return this.userRepository.create(createUserDto);
   }
 
   findAll() {
@@ -16,14 +16,22 @@ export class UsersService {
   }
 
   findOne(id: number) {
-    return `This action returns a #${id} user`;
+    return this.userRepository.findOne(id);
+  }
+
+  findByEmail(email: string) {
+    return this.userRepository.findByEmail(email);
   }
 
   update(id: number, updateUserDto: UpdateUserDto) {
-    return `This action updates a #${id} user`;
+    return this.userRepository.update(id, updateUserDto);
   }
 
   remove(id: number) {
-    return `This action removes a #${id} user`;
+    return this.userRepository.deleteUser(id);
+  }
+
+  pag(page: number, limit: number) {
+    return { page, limit };
   }
 }
