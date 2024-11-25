@@ -27,17 +27,11 @@ export class CreateUserDto {
   @IsString()
   phone: string;
 
-  //   @IsString()
-  //   @IsOptional()
-  //   country?: string;
-
-  //   @IsString()
-  //   @IsOptional()
-  //   city?: string;
+  @IsString()
+  @IsOptional()
+  country?: string;
 
   @IsString()
-  country: string | undefined;
-
-  @IsString()
-  city: string | undefined;
+  @IsOptional()
+  city?: string;
 }

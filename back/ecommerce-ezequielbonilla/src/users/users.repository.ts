@@ -1,10 +1,11 @@
 import { Injectable } from '@nestjs/common';
 import { CreateUserDto } from './dto/create-user.dto';
 import { UpdateUserDto } from './dto/update-user.dto';
+import { User } from './entities/user.entity';
 
 @Injectable()
 export class UsersRepository {
-  private users = [
+  private users: User[] = [
     {
       id: 1,
       name: 'Jorge',
@@ -49,7 +50,7 @@ export class UsersRepository {
     return this.users.find((user) => user.email === email);
   }
 
-  create(createUserDto: CreateUserDto) {
+  create(createUserDto: CreateUserDto): User {
     const newUser = { id: this.users.length + 1, ...createUserDto };
     this.users.push(newUser);
     return newUser;
