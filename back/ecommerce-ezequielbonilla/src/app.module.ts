@@ -8,30 +8,30 @@ import { TypeOrmModule } from '@nestjs/typeorm';
 import { ConfigModule, ConfigService } from '@nestjs/config';
 import { User } from './users/entities/user.entity';
 import { Product } from './products/entities/product.entity';
+import { postgresDataSourceConfig } from './config/data-source';
+import { OrdersModule } from './orders/orders.module';
+import { CateroriesModule } from './caterories/caterories.module';
+import { OrderDetailsModule } from './order-details/order-details.module';
+import { CategoriesModule } from './categories/categories.module';
 
 @Module({
   imports: [
     ConfigModule.forRoot({
       isGlobal: true,
-      envFilePath: './.env.development',
+      load: [postgresDataSourceConfig],
     }),
     TypeOrmModule.forRootAsync({
       inject: [ConfigService],
-      useFactory: (configService: ConfigService) => ({
-        type: 'postgres',
-        database: configService.get('DB_NAME'),
-        host: configService.get('DB_HOST'),
-        port: configService.get('DB_PORT'),
-        username: configService.get('DB_USERNAME'),
-        password: configService.get('DB_PASSWORD'),
-        entities: [User, Product],
-        synchronize: true,
-        logging: true,
-      }),
+      useFactory: (configService: ConfigService) =>
+        configService.get('postgres'),
     }),
     UsersModule,
     AuthModule,
     ProductsModule,
+    OrdersModule,
+    CateroriesModule,
+    OrderDetailsModule,
+    CategoriesModule,
   ],
   controllers: [AppController],
   providers: [AppService],
