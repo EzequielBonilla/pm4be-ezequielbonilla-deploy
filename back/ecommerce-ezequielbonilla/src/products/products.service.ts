@@ -27,4 +27,16 @@ export class ProductsService {
   remove(id: number) {
     return this.productRepository.deleteProduct(id);
   }
+
+  async buyProduct(id: string) {
+    const product = await this.productRepository.findOneBy({ id });
+    if (product.stock === 0) {
+      throw new Error('Our of stock');
+    }
+    await this.productRepository.update(+id, {
+      stock: product.stock - 1,
+    });
+    console.log('producto comprado');
+    return product.price;
+  }
 }
