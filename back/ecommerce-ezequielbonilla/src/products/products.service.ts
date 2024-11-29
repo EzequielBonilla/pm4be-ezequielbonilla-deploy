@@ -12,7 +12,7 @@ export class ProductsService {
     return this.productRepository.getProducts();
   }
 
-  findOne(id: number) {
+  findOne(string) {
     return this.productRepository.findOne(id);
   }
 
@@ -20,11 +20,11 @@ export class ProductsService {
     return this.productRepository.create(createProductDto);
   }
 
-  update(id: number, updateProductDto: UpdateProductDto) {
+  update(string, updateProductDto: UpdateProductDto) {
     return this.productRepository.update(id, updateProductDto);
   }
 
-  remove(id: number) {
+  remove(string) {
     return this.productRepository.deleteProduct(id);
   }
 }

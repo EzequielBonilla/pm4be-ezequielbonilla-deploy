@@ -36,7 +36,7 @@ export class ProductsRepository {
     return this.products;
   }
 
-  findOne(id: number) {
+  findOne(string) {
     return this.products.find((product) => product.id === id);
   }
 
@@ -46,7 +46,7 @@ export class ProductsRepository {
     return newProduct;
   }
 
-  update(id: number, updateProductDto: UpdateProductDto) {
+  update(string, updateProductDto: UpdateProductDto) {
     const product = this.findOne(id);
     const updatedProduct = { ...product, ...updateProductDto };
     this.products = this.products.map((product) =>
@@ -55,7 +55,7 @@ export class ProductsRepository {
     return updatedProduct;
   }
 
-  deleteProduct(id: number) {
+  deleteProduct(string) {
     this.products = this.products.filter((product) => product.id !== id);
     return id;
   }
@@ -65,7 +65,7 @@ export class ProductsRepository {
   //   return this.products.slice(startIndex, startIndex + limit);
   // }
 
-  // async getProduct(id: number) {
+  // async getProduct(string) {
   //   return this.products.find((product) => product.id === id);
   // }
 
@@ -75,7 +75,7 @@ export class ProductsRepository {
   //   return newProduct.id;
   // }
 
-  // async updateProduct(id: number, productData) {
+  // async updateProduct(string, productData) {
   //   const index = this.products.findIndex((product) => product.id === id);
   //   if (index !== -1) {
   //     this.products[index] = { ...this.products[index], ...productData };
@@ -84,7 +84,7 @@ export class ProductsRepository {
   //   return null; //manejar error a futuro
   // }
 
-  // async deleteProduct(id: number) {
+  // async deleteProduct(string) {
   //   const index = this.products.findIndex((product) => product.id === id);
   //   if (index !== -1) {
   //     this.products.splice(index, 1);
