@@ -42,7 +42,7 @@ export class UsersRepository {
     return this.users;
   }
 
-  findOne(id: number) {
+  findOne(id: string) {
     return this.users.find((user) => user.id === id);
   }
 

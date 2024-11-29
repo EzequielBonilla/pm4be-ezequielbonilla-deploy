@@ -1,11 +1,9 @@
-import e from 'express';
-
 export class UserResponseDto {
-  id: number;
+  id: string;
   name: string;
   email: string;
   address: string;
-  phone: string;
+  phone: number;
   country?: string;
   city?: string;
 

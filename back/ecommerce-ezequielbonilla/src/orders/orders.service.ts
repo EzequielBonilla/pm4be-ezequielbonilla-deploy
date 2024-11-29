@@ -9,6 +9,7 @@ import { ProductsService } from 'src/products/products.service';
 import { OrderDetailsService } from 'src/order-details/order-details.service';
 import { CreateOrderDetailDto } from 'src/order-details/dto/create-order-detail.dto';
 import { ProductId } from 'src/products/interfaces/product-id.interface';
+import { OrderResponseDto } from './dto/response-order.dto';
 
 @Injectable()
 export class OrdersService {
@@ -56,8 +57,13 @@ export class OrdersService {
     return `This action returns all orders`;
   }
 
-  findOne(id: number) {
-    return `This action returns a #${id} order`;
+  async findOne(id: string) {
+    const order = await this.orderRepository.findOneBy({ id });
+    const orderDetail = await this.orderDetailsService.findOneByOrderId(
+      order.id,
+      ['products', 'order'],
+    );
+    return orderDetail;
   }
 
   update(id: number, updateOrderDto: UpdateOrderDto) {

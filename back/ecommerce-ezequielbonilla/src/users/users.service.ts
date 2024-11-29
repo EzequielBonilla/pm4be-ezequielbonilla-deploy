@@ -16,7 +16,7 @@ export class UsersService {
     return this.userRepository.getUsers();
   }
 
-  findOne(id: number) {
+  findOne(id: string) {
     return this.userRepository.findOne(id);
   }
 

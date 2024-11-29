@@ -42,7 +42,7 @@ export class UsersController {
   @UseGuards(AuthGuard)
   @HttpCode(HttpStatus.OK)
   findOne(@Param('id') id: string) {
-    const user = this.usersService.findOne(+id);
+    const user = this.usersService.findOne(id);
     return new UserResponseDto(user);
   }
 
