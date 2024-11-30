@@ -24,7 +24,7 @@ export class OrdersService {
   async create(createOrderDto: CreateOrderDto) {
     const { userId, products } = createOrderDto;
 
-    const user = await this.userService.findOneBy(userId);
+    const user = await this.userService.findOne(userId);
 
     const order = { user: user, date: new Date() };
 
@@ -66,11 +66,11 @@ export class OrdersService {
     return orderDetail;
   }
 
-  update(id: number, updateOrderDto: UpdateOrderDto) {
+  update(id: string, updateOrderDto: UpdateOrderDto) {
     return `This action updates a #${id} order`;
   }
 
-  remove(id: number) {
+  remove(id: string) {
     return `This action removes a #${id} order`;
   }
 }

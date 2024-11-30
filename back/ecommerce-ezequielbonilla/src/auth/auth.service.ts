@@ -7,8 +7,8 @@ import { UsersService } from 'src/users/users.service';
 export class AuthService {
   constructor(private readonly userService: UsersService) {}
 
-  singIn(credentials: SingInAuthDto) {
-    const user = this.userService.findByEmail(credentials.email);
+  async singIn(credentials: SingInAuthDto) {
+    const user = await this.userService.findByEmail(credentials.email);
     if (user && user.password === credentials.password) {
       return 'Logeado con exito';
     }

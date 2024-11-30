@@ -10,9 +10,9 @@ import { User } from './users/entities/user.entity';
 import { Product } from './products/entities/product.entity';
 import { postgresDataSourceConfig } from './config/data-source';
 import { OrdersModule } from './orders/orders.module';
-import { CateroriesModule } from './caterories/caterories.module';
 import { OrderDetailsModule } from './order-details/order-details.module';
 import { CategoriesModule } from './categories/categories.module';
+import { SeedsModule } from './seeds/seeds.module';
 
 @Module({
   imports: [
@@ -29,9 +29,9 @@ import { CategoriesModule } from './categories/categories.module';
     AuthModule,
     ProductsModule,
     OrdersModule,
-    CateroriesModule,
-    OrderDetailsModule,
     CategoriesModule,
+    OrderDetailsModule,
+    SeedsModule,
   ],
   controllers: [AppController],
   providers: [AppService],

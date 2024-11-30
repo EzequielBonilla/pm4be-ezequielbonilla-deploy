@@ -1,42 +1,50 @@
 import { Injectable } from '@nestjs/common';
 import { CreateProductDto } from './dto/create-product.dto';
 import { UpdateProductDto } from './dto/update-product.dto';
-import { ProductsRepository } from './products.repository';
 import { Product } from './entities/product.entity';
+import { InjectRepository } from '@nestjs/typeorm';
+import { Repository } from 'typeorm';
 
 @Injectable()
 export class ProductsService {
-  constructor(private readonly productRepository: ProductsRepository) {}
+  constructor(
+    @InjectRepository(Product)
+    private readonly productRepository: Repository<Product>,
+  ) {}
 
-  findAll() {
-    return this.productRepository.getProducts();
+  async findAll(): Promise<Product[]> {
+    return await this.productRepository.find();
   }
 
-  findOne(id: number) {
-    return this.productRepository.findOne(id);
+  async findOne(id: string): Promise<Product> {
+    return await this.productRepository.findOne({ where: { id } });
   }
 
-  create(createProductDto: CreateProductDto): Product {
-    return this.productRepository.create(createProductDto);
+  async create(createProductDto: CreateProductDto): Promise<Product> {
+    const newProduct = this.productRepository.create(createProductDto);
+    return await this.productRepository.save(newProduct);
   }
 
-  update(id: number, updateProductDto: UpdateProductDto) {
-    return this.productRepository.update(id, updateProductDto);
+  async update(
+    id: string,
+    updateProductDto: UpdateProductDto,
+  ): Promise<Product> {
+    await this.productRepository.update(id, updateProductDto);
+    return this.findOne(id);
   }
 
-  remove(id: number) {
-    return this.productRepository.deleteProduct(id);
+  async remove(id: string): Promise<void> {
+    await this.productRepository.delete(id);
   }
 
-  async buyProduct(id: string) {
-    const product = await this.productRepository.findOneBy({ id });
-    if (product.stock === 0) {
-      throw new Error('Our of stock');
+  async buyProduct(id: string): Promise<number> {
+    const product = await this.productRepository.findOne({ where: { id } });
+    if (!product || product.stock === 0) {
+      throw new Error('Out of stock');
     }
-    await this.productRepository.update(+id, {
-      stock: product.stock - 1,
-    });
-    console.log('producto comprado');
+    product.stock -= 1;
+    await this.productRepository.save(product);
+    console.log('Product purchased');
     return product.price;
   }
 }
