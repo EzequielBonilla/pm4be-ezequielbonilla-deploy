@@ -56,7 +56,7 @@ export class UsersRepository {
     return newUser;
   }
 
-  update(id: number, updateUserDto: UpdateUserDto) {
+  update(string, updateUserDto: UpdateUserDto) {
     const user = this.findOne(id);
     const updatedUser = { ...user, ...updateUserDto };
     this.users = this.users.map((user) =>
@@ -65,12 +65,12 @@ export class UsersRepository {
     return updatedUser;
   }
 
-  deleteUser(id: number) {
+  deleteUser(string) {
     this.users = this.users.filter((user) => user.id !== id);
     return id;
   }
 
-  // async getUser(id: number) {
+  // async getUser(string) {
   //   const user = this.users.find((user) => user.id === id);
   //   if (user) {
   //     const { password, ...userWithoutPassword } = user;
@@ -85,7 +85,7 @@ export class UsersRepository {
   //   return newUser.id;
   // }
 
-  // async updateUser(id: number, userData) {
+  // async updateUser(string, userData) {
   //   const index = this.users.findIndex((user) => user.id === id);
   //   if (index !== -1) {
   //     this.users[index] = { ...this.users[index], ...userData };
@@ -94,7 +94,7 @@ export class UsersRepository {
   //   return null; //manejar error a futuro
   // }
 
-  // async deleteUser(id: number) {
+  // async deleteUser(string) {
   //   const index = this.users.findIndex((user) => user.id === id);
   //   if (index !== -1) {
   //     this.users.splice(index, 1);
