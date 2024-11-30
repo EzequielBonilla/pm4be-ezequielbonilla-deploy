@@ -1,2 +1,16 @@
+Revisar autorizaciones (que el usuario existe)
+
+no repetir emails
+
+respuesta de remove products
+
+revisar nombres de tablas
+
+user seed?
+
+http responses orders y details
+
+
+
 
 

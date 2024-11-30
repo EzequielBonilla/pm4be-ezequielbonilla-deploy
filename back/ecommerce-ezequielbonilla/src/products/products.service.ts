@@ -17,7 +17,11 @@ export class ProductsService {
   }
 
   async findOne(id: string): Promise<Product> {
-    return await this.productRepository.findOne({ where: { id } });
+    const product = await this.productRepository.findOne({ where: { id } });
+    if (!product) {
+      throw new Error('Product not found');
+    }
+    return product;
   }
 
   async create(createProductDto: CreateProductDto): Promise<Product> {
@@ -45,6 +49,6 @@ export class ProductsService {
     product.stock -= 1;
     await this.productRepository.save(product);
     console.log('Product purchased');
-    return product.price;
+    return Number(product.price);
   }
 }

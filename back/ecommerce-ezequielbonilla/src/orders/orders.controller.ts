@@ -6,10 +6,13 @@ import {
   Patch,
   Param,
   Delete,
+  HttpCode,
+  HttpStatus,
 } from '@nestjs/common';
 import { OrdersService } from './orders.service';
 import { CreateOrderDto } from './dto/create-order.dto';
 import { UpdateOrderDto } from './dto/update-order.dto';
+import { Order } from './entities/order.entity';
 
 @Controller('orders')
 export class OrdersController {
@@ -21,13 +24,15 @@ export class OrdersController {
   }
 
   @Get()
-  findAll() {
+  @HttpCode(HttpStatus.OK)
+  async findAll(): Promise<Order[]> {
     return this.ordersService.findAll();
   }
 
   @Get(':id')
-  async findOne(@Param('id') id: string) {
-    return await this.ordersService.findOne(id);
+  @HttpCode(HttpStatus.OK)
+  async findOne(@Param('id') id: string): Promise<Order> {
+    return this.ordersService.findOne(id);
   }
 
   @Patch(':id')

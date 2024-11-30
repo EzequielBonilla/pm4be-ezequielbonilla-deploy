@@ -48,22 +48,24 @@ export class OrdersService {
   private async calculateTotal(products: Array<ProductId>): Promise<number> {
     let total = 0;
     for (const product of products) {
-      total += await this.productService.buyProduct(product.id);
+      const price = await this.productService.buyProduct(product.id);
+      console.log(`Precio del producto ${product.id}:`, price);
+      total += Number(price);
     }
+    console.log('Total calculado:', total);
     return total;
   }
 
-  findAll() {
-    return `This action returns all orders`;
+  async findAll(): Promise<Order[]> {
+    return await this.orderRepository.find();
   }
 
-  async findOne(id: string) {
-    const order = await this.orderRepository.findOneBy({ id });
-    const orderDetail = await this.orderDetailsService.findOneByOrderId(
-      order.id,
-      ['products', 'order'],
-    );
-    return orderDetail;
+  async findOne(id: string): Promise<Order> {
+    const order = await this.orderRepository.findOne({ where: { id } });
+    if (!order) {
+      throw new Error('Order not found');
+    }
+    return order;
   }
 
   update(id: string, updateOrderDto: UpdateOrderDto) {

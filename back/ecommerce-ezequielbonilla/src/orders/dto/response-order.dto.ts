@@ -1,4 +1,5 @@
 import { OrderDetail } from 'src/order-details/entities/order-detail.entity';
+import { Order } from '../entities/order.entity';
 
 export class OrderResponseDto {
   id: string;
