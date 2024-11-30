@@ -4,6 +4,7 @@ import { UpdateUserDto } from './dto/update-user.dto';
 import { User } from './entities/user.entity';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
+import { UserResponseDto } from './dto/response-user.dto';
 
 @Injectable()
 export class UsersService {
@@ -20,8 +21,15 @@ export class UsersService {
     return await this.userRepository.find();
   }
 
-  async findOne(id: string): Promise<User> {
-    return await this.userRepository.findOne({ where: { id } });
+  async findOne(id: string): Promise<UserResponseDto> {
+    const user = await this.userRepository.findOne({
+      where: { id },
+      relations: ['orders'],
+    });
+    if (!user) {
+      throw new Error('User not found');
+    }
+    return new UserResponseDto(user);
   }
 
   async findByEmail(email: string): Promise<User> {

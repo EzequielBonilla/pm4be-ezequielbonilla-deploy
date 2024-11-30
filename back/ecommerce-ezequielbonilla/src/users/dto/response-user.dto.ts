@@ -6,9 +6,10 @@ export class UserResponseDto {
   phone: number;
   country?: string;
   city?: string;
+  orders: { id: string; date: Date }[];
 
   constructor(partial: Partial<UserResponseDto>) {
-    const { id, name, email, address, phone, country, city } = partial;
+    const { id, name, email, address, phone, country, city, orders } = partial;
     this.id = id;
     this.name = name;
     this.email = email;
@@ -16,5 +17,6 @@ export class UserResponseDto {
     this.phone = phone;
     this.country = country;
     this.city = city;
+    this.orders = orders.map((order) => ({ id: order.id, date: order.date }));
   }
 }
