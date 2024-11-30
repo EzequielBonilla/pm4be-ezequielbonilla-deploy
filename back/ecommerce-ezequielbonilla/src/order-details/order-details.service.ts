@@ -29,8 +29,8 @@ export class OrderDetailsService {
     return await this.orderDetailRepository.save(orderDetail);
   }
 
-  findAll() {
-    return `This action returns all orderDetails`;
+  async findAll(): Promise<OrderDetail[]> {
+    return await this.orderDetailRepository.find();
   }
 
   findOne(id: string) {

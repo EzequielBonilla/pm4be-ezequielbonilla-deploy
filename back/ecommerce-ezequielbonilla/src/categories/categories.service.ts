@@ -9,7 +9,7 @@ import { Repository } from 'typeorm';
 export class CategoriesService {
   constructor(
     @InjectRepository(Category)
-    private readonly categoryRepository: Repository<Category>, // Inyección del repositorio
+    private readonly categoryRepository: Repository<Category>,
   ) {}
 
   create(createCategoryDto: CreateCategoryDto): Promise<Category> {
@@ -17,8 +17,8 @@ export class CategoriesService {
     return this.categoryRepository.save(newCategory);
   }
 
-  findAll() {
-    return `This action returns all categories`;
+  async findAll(): Promise<Category[]> {
+    return await this.categoryRepository.find();
   }
 
   findOne(id: string) {

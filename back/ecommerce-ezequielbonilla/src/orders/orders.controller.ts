@@ -13,6 +13,7 @@ import { OrdersService } from './orders.service';
 import { CreateOrderDto } from './dto/create-order.dto';
 import { UpdateOrderDto } from './dto/update-order.dto';
 import { Order } from './entities/order.entity';
+import { OrderDetailResponseDto } from 'src/order-details/dto/response-order-detail.dto';
 
 @Controller('orders')
 export class OrdersController {
@@ -31,8 +32,10 @@ export class OrdersController {
 
   @Get(':id')
   @HttpCode(HttpStatus.OK)
-  async findOne(@Param('id') id: string): Promise<Order> {
-    return this.ordersService.findOne(id);
+  async findOne(@Param('id') id: string): Promise<OrderDetailResponseDto> {
+    const order = await this.ordersService.findOne(id);
+    console.log(order);
+    return new OrderDetailResponseDto(order);
   }
 
   @Patch(':id')
