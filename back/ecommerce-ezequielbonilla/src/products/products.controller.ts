@@ -10,6 +10,8 @@ import {
   HttpCode,
   UseGuards,
   UsePipes,
+  UseInterceptors,
+  UploadedFile,
 } from '@nestjs/common';
 import { ProductsService } from './products.service';
 import { CreateProductDto } from './dto/create-product.dto';
@@ -17,6 +19,8 @@ import { UpdateProductDto } from './dto/update-product.dto';
 import { AuthGuard } from 'src/auth/auth.guard';
 import { Product } from './entities/product.entity';
 import { UuidValidationPipe } from 'src/pipes/uuid-validation.pipe';
+import { FileInterceptor } from '@nestjs/platform-express';
+import { ImageUploadValidationPipe } from 'src/pipes/image-upload-validation.pipe';
 
 @Controller('products')
 export class ProductsController {
@@ -59,5 +63,15 @@ export class ProductsController {
   @UsePipes(UuidValidationPipe)
   async remove(@Param('id') id: string): Promise<void> {
     return this.productsService.remove(id);
+  }
+
+  @Post(':id/upload')
+  @HttpCode(HttpStatus.OK)
+  @UseInterceptors(FileInterceptor('file'))
+  async uploadFile(
+    @Param('id') id: string,
+    @UploadedFile(new ImageUploadValidationPipe()) file: Express.Multer.File,
+  ) {
+    return this.productsService.uploadFile(file, id);
   }
 }
