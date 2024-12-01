@@ -14,6 +14,7 @@ import { CreateOrderDto } from './dto/create-order.dto';
 import { UpdateOrderDto } from './dto/update-order.dto';
 import { Order } from './entities/order.entity';
 import { OrderDetailResponseDto } from 'src/order-details/dto/response-order-detail.dto';
+import { UuidValidationPipe } from '../pipes/uuid-validation.pipe';
 
 @Controller('orders')
 export class OrdersController {
@@ -32,19 +33,24 @@ export class OrdersController {
 
   @Get(':id')
   @HttpCode(HttpStatus.OK)
-  async findOne(@Param('id') id: string): Promise<OrderDetailResponseDto> {
+  async findOne(
+    @Param('id', UuidValidationPipe) id: string,
+  ): Promise<OrderDetailResponseDto> {
     const order = await this.ordersService.findOne(id);
     console.log(order);
     return new OrderDetailResponseDto(order);
   }
 
   @Patch(':id')
-  update(@Param('id') id: string, @Body() updateOrderDto: UpdateOrderDto) {
+  update(
+    @Param('id', UuidValidationPipe) id: string,
+    @Body() updateOrderDto: UpdateOrderDto,
+  ) {
     return this.ordersService.update(id, updateOrderDto);
   }
 
   @Delete(':id')
-  remove(@Param('id') id: string) {
+  remove(@Param('id', UuidValidationPipe) id: string) {
     return this.ordersService.remove(id);
   }
 }

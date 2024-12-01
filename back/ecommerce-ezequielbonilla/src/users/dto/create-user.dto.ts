@@ -1,5 +1,6 @@
 import {
   IsEmail,
+  IsNotEmpty,
   IsNumber,
   IsOptional,
   IsString,
@@ -9,7 +10,8 @@ import {
 
 export class CreateUserDto {
   @IsString()
-  @Length(10, 30)
+  @IsNotEmpty()
+  @Length(3, 50)
   name: string;
 
   @IsEmail()
@@ -23,16 +25,20 @@ export class CreateUserDto {
   password: string;
 
   @IsString()
+  @Length(3, 80)
   address: string;
 
   @IsNumber()
+  @IsNotEmpty()
   phone: number;
 
   @IsString()
+  @Length(5, 20)
   @IsOptional()
   country?: string;
 
   @IsString()
+  @Length(5, 20)
   @IsOptional()
   city?: string;
 }

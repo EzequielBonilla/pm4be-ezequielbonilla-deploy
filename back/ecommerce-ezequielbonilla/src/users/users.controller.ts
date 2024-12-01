@@ -16,6 +16,7 @@ import { CreateUserDto } from './dto/create-user.dto';
 import { UpdateUserDto } from './dto/update-user.dto';
 import { UserResponseDto } from './dto/response-user.dto';
 import { AuthGuard } from 'src/auth/auth.guard';
+import { UuidValidationPipe } from '../pipes/uuid-validation.pipe';
 
 @Controller('users')
 export class UsersController {
@@ -41,7 +42,7 @@ export class UsersController {
   @Get(':id')
   @UseGuards(AuthGuard)
   @HttpCode(HttpStatus.OK)
-  async findOne(@Param('id') id: string) {
+  async findOne(@Param('id', UuidValidationPipe) id: string) {
     const user = await this.usersService.findOne(id);
     return new UserResponseDto(user);
   }
@@ -56,7 +57,10 @@ export class UsersController {
   @Patch(':id')
   @UseGuards(AuthGuard)
   @HttpCode(HttpStatus.OK)
-  async update(@Param('id') id: string, @Body() updateUserDto: UpdateUserDto) {
+  async update(
+    @Param('id', UuidValidationPipe) id: string,
+    @Body() updateUserDto: UpdateUserDto,
+  ) {
     await this.usersService.update(id, updateUserDto);
     return { message: 'User updated successfully' };
   }
@@ -64,7 +68,7 @@ export class UsersController {
   @Delete(':id')
   @UseGuards(AuthGuard)
   @HttpCode(HttpStatus.OK)
-  async remove(@Param('id') id: string) {
+  async remove(@Param('id', UuidValidationPipe) id: string) {
     await this.usersService.remove(id);
     return { message: 'User deleted successfully' };
   }

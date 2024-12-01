@@ -17,6 +17,10 @@ export class UserResponseDto {
     this.phone = phone;
     this.country = country;
     this.city = city;
-    this.orders = orders.map((order) => ({ id: order.id, date: order.date }));
+    //this.orders = orders.map((order) => ({ id: order.id, date: order.date }));
+    this.orders = (orders || []).map((order) => ({
+      id: order.id,
+      date: order.date,
+    }));
   }
 }

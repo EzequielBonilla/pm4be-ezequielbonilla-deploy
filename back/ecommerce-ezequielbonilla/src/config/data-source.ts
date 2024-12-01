@@ -13,12 +13,12 @@ const PostgresDataSourceOptions: DataSourceOptions = {
   username: process.env.POSTGRES_USER,
   password: process.env.POSTGRES_PASSWORD,
   database: process.env.POSTGRES_DB,
-  synchronize: true,
+  synchronize: false,
   logging: false,
   entities: ['dist/**/*.entity{.ts,.js}'],
   migrations: ['dist/migration/*{.ts,.js}'],
-  //   subscribers: [], // se borra?
-  //   ssl: true, //se borra si solo es local
+  subscribers: [],
+  ssl: false,
 };
 
 export const postgresDataSourceConfig = registerAs(

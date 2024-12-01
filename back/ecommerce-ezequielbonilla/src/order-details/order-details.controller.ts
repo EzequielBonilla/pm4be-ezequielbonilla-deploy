@@ -10,6 +10,7 @@ import {
 import { OrderDetailsService } from './order-details.service';
 import { CreateOrderDetailDto } from './dto/create-order-detail.dto';
 import { UpdateOrderDetailDto } from './dto/update-order-detail.dto';
+import { UuidValidationPipe } from 'src/pipes/uuid-validation.pipe';
 
 @Controller('order-details')
 export class OrderDetailsController {
@@ -26,20 +27,20 @@ export class OrderDetailsController {
   }
 
   @Get(':id')
-  findOne(@Param('id') id: string) {
+  findOne(@Param('id', UuidValidationPipe) id: string) {
     return this.orderDetailsService.findOne(id);
   }
 
   @Patch(':id')
   update(
-    @Param('id') id: string,
+    @Param('id', UuidValidationPipe) id: string,
     @Body() updateOrderDetailDto: UpdateOrderDetailDto,
   ) {
     return this.orderDetailsService.update(id, updateOrderDetailDto);
   }
 
   @Delete(':id')
-  remove(@Param('id') id: string) {
+  remove(@Param('id', UuidValidationPipe) id: string) {
     return this.orderDetailsService.remove(id);
   }
 }
