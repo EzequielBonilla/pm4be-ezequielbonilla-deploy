@@ -6,6 +6,7 @@ import {
   Patch,
   Param,
   Delete,
+  UsePipes,
 } from '@nestjs/common';
 import { OrderDetailsService } from './order-details.service';
 import { CreateOrderDetailDto } from './dto/create-order-detail.dto';
@@ -27,20 +28,23 @@ export class OrderDetailsController {
   }
 
   @Get(':id')
-  findOne(@Param('id', UuidValidationPipe) id: string) {
+  @UsePipes(UuidValidationPipe)
+  findOne(@Param('id') id: string) {
     return this.orderDetailsService.findOne(id);
   }
 
   @Patch(':id')
+  @UsePipes(UuidValidationPipe)
   update(
-    @Param('id', UuidValidationPipe) id: string,
+    @Param('id') id: string,
     @Body() updateOrderDetailDto: UpdateOrderDetailDto,
   ) {
     return this.orderDetailsService.update(id, updateOrderDetailDto);
   }
 
   @Delete(':id')
-  remove(@Param('id', UuidValidationPipe) id: string) {
+  @UsePipes(UuidValidationPipe)
+  remove(@Param('id') id: string) {
     return this.orderDetailsService.remove(id);
   }
 }

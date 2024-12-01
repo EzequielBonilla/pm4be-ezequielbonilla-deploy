@@ -9,6 +9,7 @@ import {
   HttpStatus,
   HttpCode,
   UseGuards,
+  UsePipes,
 } from '@nestjs/common';
 import { ProductsService } from './products.service';
 import { CreateProductDto } from './dto/create-product.dto';
@@ -29,7 +30,8 @@ export class ProductsController {
 
   @Get(':id')
   @HttpCode(HttpStatus.OK)
-  async findOne(@Param('id', UuidValidationPipe) id: string): Promise<Product> {
+  @UsePipes(UuidValidationPipe)
+  async findOne(@Param('id') id: string): Promise<Product> {
     return this.productsService.findOne(id);
   }
 
@@ -43,8 +45,9 @@ export class ProductsController {
   @Patch(':id')
   @UseGuards(AuthGuard)
   @HttpCode(HttpStatus.OK)
+  @UsePipes(UuidValidationPipe)
   async update(
-    @Param('id', UuidValidationPipe) id: string,
+    @Param('id') id: string,
     @Body() updateProductDto: UpdateProductDto,
   ): Promise<Product> {
     return this.productsService.update(id, updateProductDto);
@@ -53,7 +56,8 @@ export class ProductsController {
   @Delete(':id')
   @UseGuards(AuthGuard)
   @HttpCode(HttpStatus.OK)
-  async remove(@Param('id', UuidValidationPipe) id: string): Promise<void> {
+  @UsePipes(UuidValidationPipe)
+  async remove(@Param('id') id: string): Promise<void> {
     return this.productsService.remove(id);
   }
 }

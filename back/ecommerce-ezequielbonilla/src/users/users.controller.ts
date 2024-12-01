@@ -10,6 +10,7 @@ import {
   HttpCode,
   HttpStatus,
   UseGuards,
+  UsePipes,
 } from '@nestjs/common';
 import { UsersService } from './users.service';
 import { CreateUserDto } from './dto/create-user.dto';
@@ -42,7 +43,8 @@ export class UsersController {
   @Get(':id')
   @UseGuards(AuthGuard)
   @HttpCode(HttpStatus.OK)
-  async findOne(@Param('id', UuidValidationPipe) id: string) {
+  @UsePipes(UuidValidationPipe)
+  async findOne(@Param('id') id: string) {
     const user = await this.usersService.findOne(id);
     return new UserResponseDto(user);
   }
@@ -57,10 +59,8 @@ export class UsersController {
   @Patch(':id')
   @UseGuards(AuthGuard)
   @HttpCode(HttpStatus.OK)
-  async update(
-    @Param('id', UuidValidationPipe) id: string,
-    @Body() updateUserDto: UpdateUserDto,
-  ) {
+  @UsePipes(UuidValidationPipe)
+  async update(@Param('id') id: string, @Body() updateUserDto: UpdateUserDto) {
     await this.usersService.update(id, updateUserDto);
     return { message: 'User updated successfully' };
   }
@@ -68,7 +68,8 @@ export class UsersController {
   @Delete(':id')
   @UseGuards(AuthGuard)
   @HttpCode(HttpStatus.OK)
-  async remove(@Param('id', UuidValidationPipe) id: string) {
+  @UsePipes(UuidValidationPipe)
+  async remove(@Param('id') id: string) {
     await this.usersService.remove(id);
     return { message: 'User deleted successfully' };
   }

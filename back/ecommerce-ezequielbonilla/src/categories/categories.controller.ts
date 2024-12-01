@@ -6,6 +6,7 @@ import {
   Patch,
   Param,
   Delete,
+  UsePipes,
 } from '@nestjs/common';
 import { CategoriesService } from './categories.service';
 import { CreateCategoryDto } from './dto/create-category.dto';
@@ -27,20 +28,23 @@ export class CategoriesController {
   }
 
   @Get(':id')
-  findOne(@Param('id', UuidValidationPipe) id: string) {
+  @UsePipes(UuidValidationPipe)
+  findOne(@Param('id') id: string) {
     return this.categoriesService.findOne(id);
   }
 
   @Patch(':id')
+  @UsePipes(UuidValidationPipe)
   update(
-    @Param('id', UuidValidationPipe) id: string,
+    @Param('id') id: string,
     @Body() updateCategoryDto: UpdateCategoryDto,
   ) {
     return this.categoriesService.update(id, updateCategoryDto);
   }
 
   @Delete(':id')
-  remove(@Param('id', UuidValidationPipe) id: string) {
+  @UsePipes(UuidValidationPipe)
+  remove(@Param('id') id: string) {
     return this.categoriesService.remove(id);
   }
 }
