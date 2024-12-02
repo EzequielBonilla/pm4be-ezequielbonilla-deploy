@@ -14,6 +14,7 @@ const PostgresDataSourceOptions: DataSourceOptions = {
   password: process.env.POSTGRES_PASSWORD,
   database: process.env.POSTGRES_DB,
   synchronize: true,
+  dropSchema: false,
   logging: false,
   entities: ['dist/**/*.entity{.ts,.js}'],
   migrations: ['dist/migration/*{.ts,.js}'],

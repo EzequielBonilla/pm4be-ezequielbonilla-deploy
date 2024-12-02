@@ -12,8 +12,11 @@ http responses orders y details
 
 enviar mensaje de creados, eliminados, updateados, etc etc?
 
-cambiar dir de migraciones
+manejo de errores correspondiente (validar ops, not found, format etcetc)
 
+cambiar dir de migraciones y testear
+
+retornar cloudinary upload en crudo?
 
 
 

@@ -65,7 +65,7 @@ export class ProductsController {
     return this.productsService.remove(id);
   }
 
-  @Post(':id/upload')
+  @Post('upload/:id')
   @HttpCode(HttpStatus.OK)
   @UseInterceptors(FileInterceptor('file'))
   async uploadFile(
