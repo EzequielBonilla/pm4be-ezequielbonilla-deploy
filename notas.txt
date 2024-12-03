@@ -6,7 +6,7 @@ respuesta de remove products
 
 revisar nombres de tablas
 
-user seed?
+user seed
 
 http responses orders y details
 

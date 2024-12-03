@@ -16,11 +16,14 @@ import {
 import { ProductsService } from './products.service';
 import { CreateProductDto } from './dto/create-product.dto';
 import { UpdateProductDto } from './dto/update-product.dto';
-import { AuthGuard } from 'src/auth/auth.guard';
+import { AuthGuard } from 'src/auth/guards/auth.guard';
 import { Product } from './entities/product.entity';
 import { UuidValidationPipe } from 'src/pipes/uuid-validation.pipe';
 import { FileInterceptor } from '@nestjs/platform-express';
 import { ImageUploadValidationPipe } from 'src/pipes/image-upload-validation.pipe';
+import { Roles } from 'src/decorators/role.decorator';
+import { Role } from 'src/shared/enums/roles.enum';
+import { RolesGuard } from 'src/auth/guards/roles.guard';
 
 @Controller('products')
 export class ProductsController {
@@ -33,6 +36,8 @@ export class ProductsController {
   }
 
   @Get(':id')
+  @Roles(Role.Admin)
+  @UseGuards(AuthGuard, RolesGuard)
   @HttpCode(HttpStatus.OK)
   @UsePipes(UuidValidationPipe)
   async findOne(@Param('id') id: string): Promise<Product> {
@@ -66,6 +71,7 @@ export class ProductsController {
   }
 
   @Post('upload/:id')
+  @UseGuards(AuthGuard)
   @HttpCode(HttpStatus.OK)
   @UseInterceptors(FileInterceptor('file'))
   async uploadFile(

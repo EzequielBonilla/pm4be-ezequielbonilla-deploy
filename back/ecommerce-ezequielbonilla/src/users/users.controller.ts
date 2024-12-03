@@ -16,8 +16,11 @@ import { UsersService } from './users.service';
 import { CreateUserDto } from './dto/create-user.dto';
 import { UpdateUserDto } from './dto/update-user.dto';
 import { UserResponseDto } from './dto/response-user.dto';
-import { AuthGuard } from 'src/auth/auth.guard';
+import { AuthGuard } from 'src/auth/guards/auth.guard';
 import { UuidValidationPipe } from '../pipes/uuid-validation.pipe';
+import { RolesGuard } from 'src/auth/guards/roles.guard';
+import { Roles } from 'src/decorators/role.decorator';
+import { Role } from 'src/shared/enums/roles.enum';
 
 @Controller('users')
 export class UsersController {
@@ -33,7 +36,8 @@ export class UsersController {
   }
 
   @Get()
-  @UseGuards(AuthGuard)
+  @Roles(Role.Admin)
+  @UseGuards(AuthGuard, RolesGuard)
   @HttpCode(HttpStatus.OK)
   async findAll() {
     const users = await this.usersService.findAll();

@@ -49,6 +49,7 @@ export class AuthService {
     const payload = {
       id: user.id,
       email: user.email,
+      accessLevel: user.accessLevel,
     };
 
     return this.jwtService.signAsync(payload);

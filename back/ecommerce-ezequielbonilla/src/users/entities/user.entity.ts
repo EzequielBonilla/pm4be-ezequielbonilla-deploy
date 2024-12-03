@@ -1,4 +1,5 @@
 import { Order } from 'src/orders/entities/order.entity';
+import { Role } from 'src/shared/enums/roles.enum';
 import { Column, Entity, OneToMany, PrimaryGeneratedColumn } from 'typeorm';
 
 @Entity({
@@ -47,4 +48,7 @@ export class User {
 
   @OneToMany(() => Order, (order) => order.user)
   orders: Order[];
+
+  @Column({ type: 'enum', enum: Role, default: Role.User })
+  accessLevel: Role;
 }
