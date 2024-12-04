@@ -45,4 +45,8 @@ export class SignUpAuthDto {
   @Length(5, 20)
   @IsOptional()
   city?: string;
+
+  constructor(partial: Partial<SignUpAuthDto>) {
+    Object.assign(this, partial);
+  }
 }

@@ -8,7 +8,10 @@ import { TypeOrmModule } from '@nestjs/typeorm';
 import { ConfigModule, ConfigService } from '@nestjs/config';
 import { User } from './users/entities/user.entity';
 import { Product } from './products/entities/product.entity';
-import { postgresDataSourceConfig } from './config/data-source';
+import {
+  postgresDataSourceConfig,
+  sqliteDataSourceConfig,
+} from './config/data-source';
 import { OrdersModule } from './orders/orders.module';
 import { OrderDetailsModule } from './order-details/order-details.module';
 import { CategoriesModule } from './categories/categories.module';
@@ -21,12 +24,19 @@ import { SharedModule } from './shared/shared.module';
   imports: [
     ConfigModule.forRoot({
       isGlobal: true,
-      load: [postgresDataSourceConfig],
+      load: [
+        postgresDataSourceConfig,
+        sqliteDataSourceConfig,
+        () => ({ enviroment: process.env.enviroment || 'TEST' }),
+      ],
+      envFilePath: ['.env.develompent'],
     }),
     TypeOrmModule.forRootAsync({
       inject: [ConfigService],
       useFactory: (configService: ConfigService) =>
-        configService.get('postgres'),
+        configService.get('enviroment') === 'TEST'
+          ? configService.get('postgres')
+          : configService.get('postgres'),
     }),
     UsersModule,
     AuthModule,
