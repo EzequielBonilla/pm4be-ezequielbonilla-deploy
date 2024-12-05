@@ -4,6 +4,7 @@ import { loggerGlobal } from './middlewares/logger.middleware';
 import { CategoriesSeed } from './seeds/categories/categories.seed';
 import { ProductsSeed } from './seeds/products/products.seed';
 import { ValidationPipe } from '@nestjs/common';
+import { UsersSeed } from './seeds/users/users.seed';
 
 async function bootstrap() {
   const app = await NestFactory.create(AppModule);
@@ -16,6 +17,10 @@ async function bootstrap() {
   const productsSeed = app.get(ProductsSeed);
   await productsSeed.seed();
   console.log('products seeded');
+
+  const usersSeed = app.get(UsersSeed);
+  await usersSeed.seed();
+  console.log('users seeded');
 
   app.useGlobalPipes(
     new ValidationPipe({

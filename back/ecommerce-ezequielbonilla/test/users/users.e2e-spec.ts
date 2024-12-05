@@ -5,6 +5,7 @@ import { User } from 'src/users/entities/user.entity';
 import { UsersService } from 'src/users/users.service';
 import { hash } from 'bcrypt';
 import * as request from 'supertest';
+import * as dotenv from 'dotenv';
 
 describe('Users (e2e)', () => {
   let app: INestApplication;
@@ -19,33 +20,33 @@ describe('Users (e2e)', () => {
     app = moduleFixture.createNestApplication();
     await app.init();
 
-    userService = moduleFixture.get<UsersService>(UsersService);
-    const hashedPassword = await hash('Pass1234!', 10);
+    // userService = moduleFixture.get<UsersService>(UsersService);
+    // const hashedPassword = await hash('Pass1234!', 10);
 
-    jest.spyOn(userService, 'findByEmail').mockImplementation(async (email) => {
-      if (email === 'usuariotest@mail.com') {
-        return Promise.resolve({
-          email: 'usuariotest@mail.com',
-          password: hashedPassword,
-          accessLevel: 'user',
-        } as User);
-      } else {
-        return Promise.resolve(undefined);
-      }
-    });
+    // jest.spyOn(userService, 'findByEmail').mockImplementation(async (email) => {
+    //   if (email === 'usuariotest@mail.com') {
+    //     return Promise.resolve({
+    //       email: 'usuariotest@mail.com',
+    //       password: hashedPassword,
+    //       accessLevel: 'user',
+    //     } as User);
+    //   } else {
+    //     return Promise.resolve(undefined);
+    //   }
+    // });
 
-    jest.spyOn(userService, 'findAll').mockImplementation(async () => {
-      return Promise.resolve([
-        {
-          email: 'usuariotest@mail.com',
-          accessLevel: 'user',
-        },
-      ] as User[]);
-    });
+    // jest.spyOn(userService, 'findAll').mockImplementation(async () => {
+    //   return Promise.resolve([
+    //     {
+    //       email: 'usuariotest@mail.com',
+    //       accessLevel: 'user',
+    //     },
+    //   ] as User[]);
+    // });
 
     const loginResponse = await request(app.getHttpServer())
       .post('/auth/signin')
-      .send({ email: 'usuariotest@mail.com', password: 'Pass1234!' });
+      .send({ email: 'admin@test.com', password: 'Pass1234!' });
 
     authToken = loginResponse.body['token'];
   });
