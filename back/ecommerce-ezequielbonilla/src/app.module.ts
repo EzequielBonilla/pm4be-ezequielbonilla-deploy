@@ -35,7 +35,7 @@ import { SharedModule } from './shared/shared.module';
       inject: [ConfigService],
       useFactory: (configService: ConfigService) =>
         configService.get('enviroment') === 'TEST'
-          ? configService.get('postgres')
+          ? configService.get('sqlite')
           : configService.get('postgres'),
     }),
     UsersModule,
