@@ -1,3 +1,4 @@
+import { ApiProperty } from '@nestjs/swagger';
 import { Order } from 'src/orders/entities/order.entity';
 import { Role } from 'src/shared/enums/roles.enum';
 import { Column, Entity, OneToMany, PrimaryGeneratedColumn } from 'typeorm';
@@ -47,6 +48,7 @@ export class User {
   city: string;
 
   @OneToMany(() => Order, (order) => order.user)
+  @ApiProperty({ type: () => Order })
   orders: Order[];
 
   @Column({ type: 'enum', enum: Role, default: Role.User })

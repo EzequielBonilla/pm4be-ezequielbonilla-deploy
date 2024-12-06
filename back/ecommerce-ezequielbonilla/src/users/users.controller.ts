@@ -21,8 +21,10 @@ import { UuidValidationPipe } from '../pipes/uuid-validation.pipe';
 import { RolesGuard } from 'src/auth/guards/roles.guard';
 import { Roles } from 'src/decorators/role.decorator';
 import { Role } from 'src/shared/enums/roles.enum';
+import { ApiBearerAuth, ApiTags } from '@nestjs/swagger';
 
 @Controller('users')
+@ApiTags('users')
 export class UsersController {
   constructor(private readonly usersService: UsersService) {}
 
@@ -36,6 +38,7 @@ export class UsersController {
   }
 
   @Get()
+  @ApiBearerAuth()
   @Roles(Role.Admin)
   @UseGuards(AuthGuard, RolesGuard)
   @HttpCode(HttpStatus.OK)

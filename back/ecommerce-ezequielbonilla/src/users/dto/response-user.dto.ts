@@ -1,3 +1,5 @@
+import { OrderResponseForUserDto } from 'src/orders/dto/response-order-for-user.dto';
+
 export class UserResponseDto {
   id: string;
   name: string;
@@ -6,7 +8,7 @@ export class UserResponseDto {
   phone: number;
   country?: string;
   city?: string;
-  orders: { id: string; date: Date }[];
+  orders: OrderResponseForUserDto[];
 
   constructor(partial: Partial<UserResponseDto>) {
     const { id, name, email, address, phone, country, city, orders } = partial;
@@ -17,10 +19,8 @@ export class UserResponseDto {
     this.phone = phone;
     this.country = country;
     this.city = city;
-    //this.orders = orders.map((order) => ({ id: order.id, date: order.date }));
-    this.orders = (orders || []).map((order) => ({
-      id: order.id,
-      date: order.date,
-    }));
+    this.orders = (orders || []).map(
+      (order) => new OrderResponseForUserDto(order),
+    );
   }
 }

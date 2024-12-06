@@ -5,10 +5,21 @@ import { CategoriesSeed } from './seeds/categories/categories.seed';
 import { ProductsSeed } from './seeds/products/products.seed';
 import { ValidationPipe } from '@nestjs/common';
 import { UsersSeed } from './seeds/users/users.seed';
+import { DocumentBuilder, SwaggerModule } from '@nestjs/swagger';
 
 async function bootstrap() {
   const app = await NestFactory.create(AppModule);
   app.use(loggerGlobal);
+
+  const swaggerConfig = new DocumentBuilder()
+    .setTitle('PM4BE - Ezequiel Bonilla')
+    .setDescription('Proyecto integrador del Modulo 4 -BackEnd- Ecommerce')
+    .setVersion('1.0')
+    .addBearerAuth()
+    .build();
+
+  const document = SwaggerModule.createDocument(app, swaggerConfig);
+  SwaggerModule.setup('docs', app, document);
 
   const categoriesSeed = app.get(CategoriesSeed);
   await categoriesSeed.seed();
