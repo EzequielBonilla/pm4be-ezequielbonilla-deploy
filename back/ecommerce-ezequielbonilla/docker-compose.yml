@@ -8,12 +8,11 @@ services:
     volumes:
       - .:/src
     env_file:
-      - .env.development
+      - .env.development.local
     depends_on:
       - postgres
     networks:
       - app-networks
-
 
   postgres:
     image: postgres:16
@@ -29,10 +28,8 @@ services:
     networks:
       - app-networks
 
-
 volumes:
   postgres-data:
-
 
 networks:
   app-networks:

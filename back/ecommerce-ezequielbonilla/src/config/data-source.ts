@@ -3,7 +3,7 @@ import * as dotenv from 'dotenv';
 import { registerAs } from '@nestjs/config';
 
 dotenv.config({
-  path: '.env.development',
+  path: '.env.development.local',
 });
 
 const PostgresDataSourceOptions: DataSourceOptions = {
