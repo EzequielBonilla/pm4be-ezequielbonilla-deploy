@@ -1,0 +1,38 @@
+services:
+  compose:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    ports:
+      - '3000:3000'
+    volumes:
+      - .:/src
+    env_file:
+      - .env.development
+    depends_on:
+      - postgres
+    networks:
+      - app-networks
+
+
+  postgres:
+    image: postgres:16
+    container_name: postgres
+    ports:
+      - '5432:5432'
+    environment:
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: admin
+      POSTGRES_DB: pm4be_ecommerce
+    volumes:
+      - postgres-data:/var/lib/postgresql/data
+    networks:
+      - app-networks
+
+
+volumes:
+  postgres-data:
+
+
+networks:
+  app-networks:
