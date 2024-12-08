@@ -21,9 +21,7 @@ import { Product } from './entities/product.entity';
 import { UuidValidationPipe } from 'src/pipes/uuid-validation.pipe';
 import { FileInterceptor } from '@nestjs/platform-express';
 import { ImageUploadValidationPipe } from 'src/pipes/image-upload-validation.pipe';
-import { Roles } from 'src/decorators/role.decorator';
-import { Role } from 'src/shared/enums/roles.enum';
-import { RolesGuard } from 'src/auth/guards/roles.guard';
+import { ApiBearerAuth } from '@nestjs/swagger';
 
 @Controller('products')
 export class ProductsController {
@@ -36,8 +34,6 @@ export class ProductsController {
   }
 
   @Get(':id')
-  @Roles(Role.Admin)
-  @UseGuards(AuthGuard, RolesGuard)
   @HttpCode(HttpStatus.OK)
   @UsePipes(UuidValidationPipe)
   async findOne(@Param('id') id: string): Promise<Product> {
@@ -45,6 +41,7 @@ export class ProductsController {
   }
 
   @Post()
+  @ApiBearerAuth()
   @UseGuards(AuthGuard)
   @HttpCode(HttpStatus.CREATED)
   async create(@Body() createProductDto: CreateProductDto): Promise<Product> {
@@ -52,6 +49,7 @@ export class ProductsController {
   }
 
   @Patch(':id')
+  @ApiBearerAuth()
   @UseGuards(AuthGuard)
   @HttpCode(HttpStatus.OK)
   @UsePipes(UuidValidationPipe)
@@ -63,6 +61,7 @@ export class ProductsController {
   }
 
   @Delete(':id')
+  @ApiBearerAuth()
   @UseGuards(AuthGuard)
   @HttpCode(HttpStatus.OK)
   @UsePipes(UuidValidationPipe)
@@ -71,6 +70,7 @@ export class ProductsController {
   }
 
   @Post('upload/:id')
+  @ApiBearerAuth()
   @UseGuards(AuthGuard)
   @HttpCode(HttpStatus.OK)
   @UseInterceptors(FileInterceptor('file'))

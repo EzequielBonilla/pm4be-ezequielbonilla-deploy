@@ -21,15 +21,15 @@ export class CategoriesService {
     return await this.categoryRepository.find();
   }
 
-  findOne(id: string) {
-    return `This action returns a #${id} category`;
-  }
+  // findOne(id: string) {
+  //   return `This action returns a #${id} category`;
+  // }
 
-  update(id: string, updateCategoryDto: UpdateCategoryDto) {
-    return `This action updates a #${id} category`;
-  }
+  // update(id: string, updateCategoryDto: UpdateCategoryDto) {
+  //   return `This action updates a #${id} category`;
+  // }
 
-  remove(id: string) {
-    return `This action removes a #${id} category`;
-  }
+  // remove(id: string) {
+  //   return `This action removes a #${id} category`;
+  // }
 }

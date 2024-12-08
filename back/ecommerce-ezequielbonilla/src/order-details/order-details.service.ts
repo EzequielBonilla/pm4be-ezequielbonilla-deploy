@@ -29,19 +29,19 @@ export class OrderDetailsService {
     return await this.orderDetailRepository.save(orderDetail);
   }
 
-  async findAll(): Promise<OrderDetail[]> {
-    return await this.orderDetailRepository.find();
-  }
-
   findOne(id: string) {
     return `This action returns a #${id} orderDetail`;
   }
 
-  update(id: string, updateOrderDetailDto: UpdateOrderDetailDto) {
-    return `This action updates a #${id} orderDetail`;
-  }
+  // async findAll(): Promise<OrderDetail[]> {
+  //   return await this.orderDetailRepository.find();
+  // }
 
-  remove(id: string) {
-    return `This action removes a #${id} orderDetail`;
-  }
+  // update(id: string, updateOrderDetailDto: UpdateOrderDetailDto) {
+  //   return `This action updates a #${id} orderDetail`;
+  // }
+
+  // remove(id: string) {
+  //   return `This action removes a #${id} orderDetail`;
+  // }
 }

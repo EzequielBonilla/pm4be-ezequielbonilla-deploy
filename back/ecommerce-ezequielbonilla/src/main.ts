@@ -13,7 +13,9 @@ async function bootstrap() {
 
   const swaggerConfig = new DocumentBuilder()
     .setTitle('PM4BE - Ezequiel Bonilla')
-    .setDescription('Proyecto integrador del Modulo 4 -BackEnd- Ecommerce')
+    .setDescription(
+      'Proyecto integrador del Modulo 4 -BackEnd- API Dockerizada de Ecommerce',
+    )
     .setVersion('1.0')
     .addBearerAuth()
     .build();

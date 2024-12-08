@@ -21,7 +21,7 @@ import { UuidValidationPipe } from '../pipes/uuid-validation.pipe';
 import { RolesGuard } from 'src/auth/guards/roles.guard';
 import { Roles } from 'src/decorators/role.decorator';
 import { Role } from 'src/shared/enums/roles.enum';
-import { ApiBearerAuth, ApiTags } from '@nestjs/swagger';
+import { ApiBearerAuth, ApiExcludeEndpoint, ApiTags } from '@nestjs/swagger';
 
 @Controller('users')
 @ApiTags('users')
@@ -29,7 +29,10 @@ export class UsersController {
   constructor(private readonly usersService: UsersService) {}
 
   @Get('pag')
+  @ApiBearerAuth()
+  @ApiExcludeEndpoint()
   @UseGuards(AuthGuard)
+  @HttpCode(HttpStatus.OK)
   findWithPagination(
     @Query('page') page: number = 1,
     @Query('limit') limit: number = 5,
@@ -48,6 +51,7 @@ export class UsersController {
   }
 
   @Get(':id')
+  @ApiBearerAuth()
   @UseGuards(AuthGuard)
   @HttpCode(HttpStatus.OK)
   @UsePipes(UuidValidationPipe)
@@ -57,6 +61,7 @@ export class UsersController {
   }
 
   @Post()
+  @ApiExcludeEndpoint()
   @HttpCode(HttpStatus.CREATED)
   async create(@Body() createUserDto: CreateUserDto): Promise<UserResponseDto> {
     const user = await this.usersService.create(createUserDto);
@@ -64,6 +69,7 @@ export class UsersController {
   }
 
   @Patch(':id')
+  @ApiBearerAuth()
   @UseGuards(AuthGuard)
   @HttpCode(HttpStatus.OK)
   @UsePipes(UuidValidationPipe)
@@ -73,6 +79,7 @@ export class UsersController {
   }
 
   @Delete(':id')
+  @ApiBearerAuth()
   @UseGuards(AuthGuard)
   @HttpCode(HttpStatus.OK)
   @UsePipes(UuidValidationPipe)
