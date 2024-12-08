@@ -18,13 +18,18 @@ import { AuthGuard } from 'src/auth/guards/auth.guard';
 import { RolesGuard } from 'src/auth/guards/roles.guard';
 import { Roles } from 'src/decorators/role.decorator';
 import { Role } from 'src/shared/enums/roles.enum';
-import { ApiBearerAuth } from '@nestjs/swagger';
+import { ApiBearerAuth, ApiOperation } from '@nestjs/swagger';
 
 @Controller('orders')
 export class OrdersController {
   constructor(private readonly ordersService: OrdersService) {}
 
   @Post()
+  @ApiOperation({
+    summary: 'Creación de ordenes de compra',
+    description:
+      'Este endpoint está destinado a la creación de ordenes de compra por parte de los usuarios.',
+  })
   @ApiBearerAuth()
   @UseGuards(AuthGuard)
   @HttpCode(HttpStatus.CREATED)
@@ -33,6 +38,11 @@ export class OrdersController {
   }
 
   @Get()
+  @ApiOperation({
+    summary: 'Traer todas las ordenes de compra',
+    description:
+      'Endpoint para traer todas las ordenes de la DB, resguardado por roles.',
+  })
   @ApiBearerAuth()
   @Roles(Role.Admin)
   @UseGuards(AuthGuard, RolesGuard)
@@ -42,6 +52,11 @@ export class OrdersController {
   }
 
   @Get(':id')
+  @ApiOperation({
+    summary: 'Traer orden de compra especifica',
+    description:
+      'Este endpoint permite acceder a los detalles de una otden de compra especifica a través de su ID.',
+  })
   @ApiBearerAuth()
   @UseGuards(AuthGuard)
   @HttpCode(HttpStatus.OK)

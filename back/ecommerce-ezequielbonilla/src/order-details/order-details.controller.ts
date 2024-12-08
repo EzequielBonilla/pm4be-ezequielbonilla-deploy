@@ -13,13 +13,18 @@ import { OrderDetailsService } from './order-details.service';
 import { CreateOrderDetailDto } from './dto/create-order-detail.dto';
 import { UuidValidationPipe } from 'src/pipes/uuid-validation.pipe';
 import { AuthGuard } from 'src/auth/guards/auth.guard';
-import { ApiBearerAuth } from '@nestjs/swagger';
+import { ApiBearerAuth, ApiOperation } from '@nestjs/swagger';
 
 @Controller('order-details')
 export class OrderDetailsController {
   constructor(private readonly orderDetailsService: OrderDetailsService) {}
 
   @Post()
+  @ApiOperation({
+    summary: 'Crear de talle de orden de compra',
+    description:
+      'Este endpoint crea el detalle de una orden, con el listado de productos y su precio final.',
+  })
   @ApiBearerAuth()
   @UseGuards(AuthGuard)
   @HttpCode(HttpStatus.CREATED)
@@ -28,6 +33,11 @@ export class OrderDetailsController {
   }
 
   @Get(':id')
+  @ApiOperation({
+    summary: 'Traer detalle de orden especifica',
+    description:
+      'Con este endpoint podemos acceder a un detalle de orden especifico.',
+  })
   @ApiBearerAuth()
   @UseGuards(AuthGuard)
   @HttpCode(HttpStatus.OK)

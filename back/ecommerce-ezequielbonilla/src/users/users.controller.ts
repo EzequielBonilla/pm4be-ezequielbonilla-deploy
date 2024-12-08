@@ -21,26 +21,23 @@ import { UuidValidationPipe } from '../pipes/uuid-validation.pipe';
 import { RolesGuard } from 'src/auth/guards/roles.guard';
 import { Roles } from 'src/decorators/role.decorator';
 import { Role } from 'src/shared/enums/roles.enum';
-import { ApiBearerAuth, ApiExcludeEndpoint, ApiTags } from '@nestjs/swagger';
+import {
+  ApiBearerAuth,
+  ApiExcludeEndpoint,
+  ApiOperation,
+  ApiTags,
+} from '@nestjs/swagger';
 
 @Controller('users')
-@ApiTags('users')
 export class UsersController {
   constructor(private readonly usersService: UsersService) {}
 
-  @Get('pag')
-  @ApiBearerAuth()
-  @ApiExcludeEndpoint()
-  @UseGuards(AuthGuard)
-  @HttpCode(HttpStatus.OK)
-  findWithPagination(
-    @Query('page') page: number = 1,
-    @Query('limit') limit: number = 5,
-  ) {
-    return this.usersService.pag(page, limit);
-  }
-
   @Get()
+  @ApiOperation({
+    summary: 'Traer todos los usuarios',
+    description:
+      'Este endpoint brinda un listado de todos los usuarios registrados con sus datos, excepto parametros sensibles.',
+  })
   @ApiBearerAuth()
   @Roles(Role.Admin)
   @UseGuards(AuthGuard, RolesGuard)
@@ -50,7 +47,28 @@ export class UsersController {
     return users.map((user) => new UserResponseDto(user));
   }
 
+  @Get('pag')
+  @ApiBearerAuth()
+  @ApiOperation({
+    summary: 'Query para paginación',
+    description:
+      'Este endpoint está destinado a futuras configuraciónes de paginación.',
+  })
+  @UseGuards(AuthGuard)
+  @HttpCode(HttpStatus.OK)
+  findWithPagination(
+    @Query('page') page: number = 1,
+    @Query('limit') limit: number = 5,
+  ) {
+    return this.usersService.pag(page, limit);
+  }
+
   @Get(':id')
+  @ApiOperation({
+    summary: 'Traer usuario especifico',
+    description:
+      'Este endpoint permite traer los datos de un usuario especifico a través de la ID enviada.',
+  })
   @ApiBearerAuth()
   @UseGuards(AuthGuard)
   @HttpCode(HttpStatus.OK)
@@ -69,6 +87,11 @@ export class UsersController {
   }
 
   @Patch(':id')
+  @ApiOperation({
+    summary: 'Editar usuario especifico',
+    description:
+      'Este endpoint nos pemite modificar los datos de un usuario, exceptuando el rol por seguridad',
+  })
   @ApiBearerAuth()
   @UseGuards(AuthGuard)
   @HttpCode(HttpStatus.OK)
@@ -79,6 +102,11 @@ export class UsersController {
   }
 
   @Delete(':id')
+  @ApiOperation({
+    summary: 'Borrar un usuario especifico',
+    description:
+      'Este endpoint se dedica a borrar un usuario de la base de datos a través de un ID.',
+  })
   @ApiBearerAuth()
   @UseGuards(AuthGuard)
   @HttpCode(HttpStatus.OK)
