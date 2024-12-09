@@ -25,7 +25,6 @@ import {
   ApiBearerAuth,
   ApiExcludeEndpoint,
   ApiOperation,
-  ApiTags,
 } from '@nestjs/swagger';
 
 @Controller('users')

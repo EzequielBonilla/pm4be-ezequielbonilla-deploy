@@ -1,6 +1,5 @@
 import { HttpException, HttpStatus, Injectable } from '@nestjs/common';
 import { SignInAuthDto } from './dto/signin-auth.dto';
-import { UpdateAuthDto } from './dto/update-auth.dto';
 import { UsersService } from 'src/users/users.service';
 import { JwtService } from '@nestjs/jwt';
 import { SignUpAuthDto } from './dto/signup-auth.dto';

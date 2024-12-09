@@ -1,13 +1,11 @@
 import { INestApplication } from '@nestjs/common';
 import { Test, TestingModule } from '@nestjs/testing';
 import { AppModule } from 'src/app.module';
-import { UsersService } from 'src/users/users.service';
 import * as request from 'supertest';
 
-describe('Users (e2e)', () => {
+describe('Products (e2e)', () => {
   let app: INestApplication;
   let authToken: string;
-  let userService: UsersService;
 
   beforeEach(async () => {
     const moduleFixture: TestingModule = await Test.createTestingModule({
@@ -28,9 +26,9 @@ describe('Users (e2e)', () => {
     await app.close();
   });
 
-  it('/users (GET) retorna un array de usuarios y un status ok', async () => {
+  it('/products (GET) retorna un array de productos y un status ok', async () => {
     const req = await request(app.getHttpServer())
-      .get('/users')
+      .get('/products')
       .set('Authorization', `Bearer ${authToken}`);
 
     expect(req.status).toBe(200);

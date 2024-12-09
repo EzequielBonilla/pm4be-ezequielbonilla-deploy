@@ -69,7 +69,7 @@ export class User {
   @ApiProperty({
     example: 'Capital Federal',
   })
-  city: string;
+  ciudad: string;
 
   @OneToMany(() => Order, (order) => order.user)
   @ApiProperty({ type: () => Order, example: 'orders list for this user' })

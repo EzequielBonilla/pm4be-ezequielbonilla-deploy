@@ -73,16 +73,28 @@ describe('AuthController', () => {
     expect(controller).toBeDefined();
   });
 
-  it('signUp() should return a new UserResponseDto and create User', async () => {
+  it('signUp() deberìa retornar un nuevo UserResponseDto y crear User', async () => {
     const user = await controller.signUp(mockSignUpUser);
     expect(user).toBeDefined();
     expect(user).toBeInstanceOf(UserResponseDto);
     expect(user).toHaveProperty('id');
   });
 
-  it('signIn() should return a token', async () => {
+  it('signIn() deberìa retornar un token', async () => {
     const token = await controller.signIn(mockSignInUser);
     expect(token).toBeDefined();
     expect(token).toHaveProperty('token');
+  });
+
+  it('signUp() debería lanzar un error si los datos son inválidos', async () => {
+    const invalidUser = { ...mockSignUpUser, email: '' };
+    await expect(controller.signUp(invalidUser)).rejects.toThrow();
+  });
+
+  it('signIn() debería lanzar un error si las credenciales son incorrectas', async () => {
+    const invalidSignIn = { ...mockSignInUser, password: 'ContraseñaErronea' };
+    await expect(controller.signIn(invalidSignIn)).rejects.toThrow(
+      'Invalid credentials',
+    );
   });
 });

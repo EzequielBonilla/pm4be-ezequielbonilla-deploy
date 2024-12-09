@@ -54,10 +54,38 @@ describe('AuthService', () => {
     expect(service).toBeDefined();
   });
 
-  it('signUp() should creat a new user with encrypted password', async () => {
+  it('signUp() deberìa crear un usuario con password encriptada', async () => {
     const user = await service.signUp(mockUser);
     expect(user).toHaveProperty('id');
     expect(user).toHaveProperty('accessLevel', Role.User);
     expect(user).toHaveProperty('password');
+  });
+
+  it('signUp() debería lanzar error si los correos ya existen', async () => {
+    jest
+      .spyOn(service['userService'], 'findByEmail')
+      .mockResolvedValueOnce({} as User);
+
+    await expect(service.signUp(mockUser)).rejects.toThrow(
+      'Email already in use',
+    );
+  });
+
+  it('signUp() debería lanzar error si las contraseñas no coinciden', async () => {
+    const invalidUser = { ...mockUser, passwordConfirm: 'Diferente123!' };
+
+    await expect(service.signUp(invalidUser)).rejects.toThrow(
+      'Passwords do not match',
+    );
+  });
+
+  it('signIn() debería lanzar error si el usuario no existe', async () => {
+    jest
+      .spyOn(service['userService'], 'findByEmail')
+      .mockResolvedValueOnce(undefined);
+
+    await expect(service.signIn(mockSignInUser)).rejects.toThrow(
+      'Invalid credentials',
+    );
   });
 });

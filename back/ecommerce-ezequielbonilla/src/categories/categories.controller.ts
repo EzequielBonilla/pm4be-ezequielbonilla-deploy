@@ -3,18 +3,12 @@ import {
   Get,
   Post,
   Body,
-  Patch,
-  Param,
-  Delete,
-  UsePipes,
   UseGuards,
   HttpCode,
   HttpStatus,
 } from '@nestjs/common';
 import { CategoriesService } from './categories.service';
 import { CreateCategoryDto } from './dto/create-category.dto';
-import { UpdateCategoryDto } from './dto/update-category.dto';
-import { UuidValidationPipe } from 'src/pipes/uuid-validation.pipe';
 import { AuthGuard } from 'src/auth/guards/auth.guard';
 import { RolesGuard } from 'src/auth/guards/roles.guard';
 import { Roles } from 'src/decorators/role.decorator';
