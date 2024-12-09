@@ -22,7 +22,9 @@ COPY . .
 
 RUN npm run build
 
-RUN npm ci --only=production && npm cache clean --force
+RUN npm ci --only=production
+
+RUN npm cache clean --force
 
 #Stage 3
 FROM node:20-alpine AS production
