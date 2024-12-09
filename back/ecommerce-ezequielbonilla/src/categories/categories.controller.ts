@@ -41,27 +41,4 @@ export class CategoriesController {
   findAll() {
     return this.categoriesService.findAll();
   }
-
-  // @Get(':id')
-  // @UsePipes(UuidValidationPipe)
-  // findOne(@Param('id') id: string) {
-  //   return this.categoriesService.findOne(id);
-  // }
-
-  // @Patch(':id')
-  // @UseGuards(AuthGuard)
-  // @UsePipes(UuidValidationPipe)
-  // update(
-  //   @Param('id') id: string,
-  //   @Body() updateCategoryDto: UpdateCategoryDto,
-  // ) {
-  //   return this.categoriesService.update(id, updateCategoryDto);
-  // }
-
-  // @Delete(':id')
-  // @UseGuards(AuthGuard)
-  // @UsePipes(UuidValidationPipe)
-  // remove(@Param('id') id: string) {
-  //   return this.categoriesService.remove(id);
-  // }
 }
