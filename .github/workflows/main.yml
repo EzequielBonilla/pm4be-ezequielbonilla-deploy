@@ -24,4 +24,4 @@ jobs:
           context: ./back/ecommerce-ezequielbonilla
           file: ./back/ecommerce-ezequielbonilla/Dockerfile
           push: true
-          tag: ${{ secrets.DOCKERHUB_USERNAME }}/ecommerce-nest:latest
+          tags: ${{ secrets.DOCKERHUB_USERNAME }}/ecommerce-nest:latest
