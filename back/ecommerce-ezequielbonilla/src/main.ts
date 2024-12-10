@@ -47,7 +47,14 @@ async function bootstrap() {
 
     console.log(`Conectando a la base de datos ${databaseName}...`);
 
-    await dataSource.initialize();
+    try {
+      await dataSource.initialize();
+      console.log('DataSource has been initialized successfully!');
+    } catch (error) {
+      console.error('Error during DataSource initialization:', error);
+    }
+
+    // await dataSource.initialize();
     await dataSource.runMigrations();
     console.log('Migraciones ejecutadas con éxito');
   } catch (error) {
